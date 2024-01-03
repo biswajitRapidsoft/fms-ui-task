@@ -15,6 +15,7 @@ import Groups3Icon from "@mui/icons-material/Groups3";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ListItemText from "@mui/material/ListItemText";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import RoomIcon from "@mui/icons-material/Room";
 
 import { Typography } from "@mui/material";
 import { useEffect } from "react";
@@ -168,6 +169,43 @@ const [open, setOpen] = useState(false);
         </DrawerHeader>
         <List>
 
+        <ListItem
+                disablePadding
+                // sx={{
+                //   display: "block",
+                //   bgcolor:
+                //     activeListItem === "/empdashboard"
+                //       ? activeListBgColor
+                //       : inactiveListBgColor,
+                //       '&:hover': {
+                //         bgcolor:'#5E6985'
+                //       },
+                // }}
+                onClick={() => handleSelectListItem("/")}
+              >
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <DashboardIcon sx={{ color: "#FF8442", }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Dashboard"
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+
               <ListItem
                 disablePadding
                 // sx={{
@@ -204,6 +242,38 @@ const [open, setOpen] = useState(false);
                   />
                 </ListItemButton>
               </ListItem>
+
+
+              <ListItem 
+              disablePadding
+              onClick={() => handleSelectListItem("/tabledata")} 
+              >
+            <ListItemButton
+              // component={Link}
+              // to="/tabledata" 
+              sx={{
+                minHeight: 48,
+                display: "flex",
+                // alignItems: "center",
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <RoomIcon sx={{ color: "yellow", }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="Site Management"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
    
         </List>
       </Drawer>
