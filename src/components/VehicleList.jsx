@@ -30,7 +30,8 @@ import AddIcon from '@mui/icons-material/Add';
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import ClearIcon from '@mui/icons-material/Clear';
 
-import data from "../data/data";
+// import data from "../data/data";
+import dataSomya from "../data/dataSomya";
 import Navbar from "./Navbar";
 import Sidebar from './Sidebar'
 import FuelProgressBar from "./FuelProgressBar";
@@ -42,7 +43,7 @@ import DynamicBreadcrumb from "./DynamicBreadcrumb";
 
 const VehicleList = () => {
   // const [rawTableData, setRawTableData] = useState(data ? data : null);
-  const rawTableData = data ? data : null
+  const rawTableData = dataSomya ? dataSomya : null
   const [filteredTableData, setFilteredTableData] = useState([]);
   // const [actualTableData, setActualTableData] = useState(
   //   rawTableData ? rawTableData.data : null

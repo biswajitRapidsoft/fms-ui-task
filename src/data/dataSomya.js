@@ -1,4 +1,4 @@
- const data = {
+ const dataSomya = {
     "totalPages": 1,
     "numberOfElements": 694,
     "totalElements": 694,
@@ -66124,4 +66124,4 @@
     "totalGpsEquiptedVehicle": 684
   }
 
-  export default data
+  export default dataSomya
