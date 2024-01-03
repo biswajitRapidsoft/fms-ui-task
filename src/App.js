@@ -1,19 +1,12 @@
-import './App.css';
-import UserManagement from './Components/UserManagement';
-import Navbar from './Components/Navbar';
-import Sidebar from './Components/Sidebar';
+// import './App.css';
+import Routing from './routes/Routing';
 
 function App() {
+
   return (
     <div className="App">
-      {/* <Navbar/>
-      <Sidebar/> */}
-
-      {/* <Navbar/> */}
-      <Sidebar/>
-     <UserManagement/>
-     {/* <Navbar/> */}
-     {/* <Sidebar/> */}
+      {/* <VehicleList /> */}
+      <Routing />
     </div>
   );
 }
