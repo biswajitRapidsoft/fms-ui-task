@@ -55,7 +55,7 @@ const Dashboard = () => {
                 // pb: "0.5em",
               }}
             >
-                <Typography sx={{fontSize:'50px', fontWeight:600, color:'#4F4F4F'}}> DASHOBOARD</Typography>
+                <Typography sx={{fontSize:'50px', fontWeight:600, color:'#4F4F4F'}}> DASHBOARD</Typography>
 
             </Paper>
           </Grid>
