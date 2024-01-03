@@ -56,7 +56,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const TableData = () => {
   const breadcrumbs = [
     { name: "Dashboard", path: "/" },
-    { name: "Site", path: "/tabledata" },
+    { name: "Site", path: "/sitedata" },
   ];
   
   const [pg, setPg] = useState(0);

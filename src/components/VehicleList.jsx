@@ -548,7 +548,7 @@ const handleExportPDFAllData = () => {
           display: "flex",
           flexGrow: 1,
           px: 3,
-          pl:'4em'
+          pl:'4em',
         }}
       >
         <Grid container spacing={2}>

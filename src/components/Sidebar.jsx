@@ -246,7 +246,7 @@ const [open, setOpen] = useState(false);
 
               <ListItem 
               disablePadding
-              onClick={() => handleSelectListItem("/tabledata")} 
+              onClick={() => handleSelectListItem("/sitedata")} 
               >
             <ListItemButton
               // component={Link}
@@ -270,6 +270,37 @@ const [open, setOpen] = useState(false);
               </ListItemIcon>
               <ListItemText
                 primary="Site Management"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem 
+              disablePadding
+              onClick={() => handleSelectListItem("/usertable")} 
+              >
+            <ListItemButton
+              // component={Link}
+              // to="/tabledata" 
+              sx={{
+                minHeight: 48,
+                display: "flex",
+                // alignItems: "center",
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <PersonIcon sx={{ color: "#42FF95", }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="User Management"
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
