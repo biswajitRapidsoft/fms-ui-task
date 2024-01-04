@@ -260,8 +260,6 @@ const UserManagement = () => {
           maxHeight: "100%",
           // width:"86%",
           flexDirection: "row-reverse",
-          backgroundColor: "",
-
           
         }}
       >
