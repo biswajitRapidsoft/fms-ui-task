@@ -26,7 +26,11 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
-
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -40,79 +44,120 @@ const UserManagement = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCodeQuery, setSearchCodeQuery] = useState("");
 
-// let siteNames = [];
+  const breadcrumbs = [
+    <Link
+      underline="hover"
+      key="2"
+      color="inherit"
+      href="/material-ui/getting-started/installation/"
+      onClick={handleClick}
+    >
+      Dashboard
+    </Link>,
+    <Typography key="3" color="text.primary">
+      User
+    </Typography>,
+  ];
 
-// data.data.forEach(item => {
-   
-//     if (item.site && item.site.length > 0) {
-     
-//         item.site.forEach(site => {
-//             if (site.name) {
-              
-//                 siteNames.push(site.name);
-//             }
-//         });
-//     }
-// });
-  
-  
-//   const uniqueSiteNames = Array.from(new Set(siteNames));
-//   const autocompleteOptions = uniqueSiteNames.map((site, index) => ({ label: site, id: index }));
+  const navigate = useNavigate()
 
+  function handleClick(event) {
+    event.preventDefault();
 
-  React.useEffect(()=>{
+    navigate('/')
+    console.info("You clicked a breadcrumb.");
+  }
+
+  // let siteNames = [];
+
+  // data.data.forEach(item => {
+
+  //     if (item.site && item.site.length > 0) {
+
+  //         item.site.forEach(site => {
+  //             if (site.name) {
+
+  //                 siteNames.push(site.name);
+  //             }
+  //         });
+  //     }
+  // });
+
+  //   const uniqueSiteNames = Array.from(new Set(siteNames));
+  //   const autocompleteOptions = uniqueSiteNames.map((site, index) => ({ label: site, id: index }));
+
+  React.useEffect(() => {
     const siteObjects = [];
 
-    dataHarshita.data.forEach(item => {
-  if (item.site && item.site.length > 0) {
-    item.site.forEach(site => {
-      if (site.name) {
-        siteObjects.push(site); 
+    dataHarshita.data.forEach((item) => {
+      if (item.site && item.site.length > 0) {
+        item.site.forEach((site) => {
+          if (site.name) {
+            siteObjects.push(site);
+          }
+        });
       }
     });
-  }
-});
 
-const uniqueSiteObjects = Array.from(new Set(siteObjects.map(s => s.name))).map(name => {
-  return siteObjects.find(s => s.name === name); // 
-});
+    const uniqueSiteObjects = Array.from(
+      new Set(siteObjects.map((s) => s.name))
+    ).map((name) => {
+      return siteObjects.find((s) => s.name === name); //
+    });
 
-
-const autocompleteOptionsToSet = uniqueSiteObjects.map((site, index) => ({
-  label: site.name,
-  id: site.id, 
-  siteObject: site, 
-}));
-setAutocompleteOptions(autocompleteOptionsToSet);
-  }, [])
-
-
+    const autocompleteOptionsToSet = uniqueSiteObjects.map((site, index) => ({
+      label: site.name,
+      id: site.id,
+      siteObject: site,
+    }));
+    setAutocompleteOptions(autocompleteOptionsToSet);
+  }, []);
 
   const exportData = () => {
-    let tableHeaders = ["User Details", "", "","","", "Phone Number/Email", "", "","","", "Site Access", "", "","",""];
+    let tableHeaders = [
+      "User Details",
+      "",
+      "",
+      "",
+      "",
+      "Phone Number/Email",
+      "",
+      "",
+      "",
+      "",
+      "Site Access",
+      "",
+      "",
+      "",
+      "",
+    ];
     // let tableRows = filteredData.map((d) => [
     //   `${d.name}(${d.employeeCode})`,
     //   `${d.phoneNumber} | ${d.email}`,
-      
+
     //   d.name,
     // ]);
 
     let tableRows = filteredData.flatMap((d) => [
       [
-        `${d.name}(${d.employeeCode})`, "", "","" ,"",
-        `${d.phoneNumber} | ${d.email}`, "", "","", "",
-        
+        `${d.name}(${d.employeeCode})`,
+        "",
+        "",
+        "",
+        "",
+        `${d.phoneNumber} | ${d.email}`,
+        "",
+        "",
+        "",
+        "",
+
         (d.site && d.site.map((siteData) => siteData.name).join(", ")) || "",
-      "", "", "",
-       
+        "",
+        "",
+        "",
       ],
-     
     ]);
 
-
-
-  
-  
     let wsData = [tableHeaders, ...tableRows];
 
     let wb = utils.book_new();
@@ -121,7 +166,7 @@ setAutocompleteOptions(autocompleteOptionsToSet);
     utils.book_append_sheet(wb, ws, "items");
     writeFile(wb, "user_data.xlsx");
   };
-  
+
   const [selectedSiteName, setSelectedSiteName] = useState(null);
   const filteredData = dataHarshita.data.filter((d) => {
     const nameMatch = d.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -129,10 +174,14 @@ setAutocompleteOptions(autocompleteOptionsToSet);
       .toLowerCase()
       .includes(searchCodeQuery.toLowerCase());
 
-      const siteMatch = !selectedSiteName || (
-        d.site && d.site.length > 0 &&
-        d.site.some((site) => site.name.toLowerCase() === selectedSiteName.label.toLowerCase())
-      );
+    const siteMatch =
+      !selectedSiteName ||
+      (d.site &&
+        d.site.length > 0 &&
+        d.site.some(
+          (site) =>
+            site.name.toLowerCase() === selectedSiteName.label.toLowerCase()
+        ));
 
     return nameMatch && codeMatch && siteMatch;
   });
@@ -173,8 +222,7 @@ setAutocompleteOptions(autocompleteOptionsToSet);
       body: filteredData.map((d) => [
         `${d.name}(${d.employeeCode})`,
         `${d.phoneNumber} | ${d.email}`,
-        (d.site && d.site.map((siteData) => siteData.name).join(", ")) 
-         
+        d.site && d.site.map((siteData) => siteData.name).join(", "),
       ]),
     });
 
@@ -183,47 +231,42 @@ setAutocompleteOptions(autocompleteOptionsToSet);
 
   const clearSearchQuery = () => {
     setSearchQuery("");
-  
   };
 
   const clearCodeSearchQuery = () => {
-  
-    setSearchCodeQuery("")
+    setSearchCodeQuery("");
   };
-  
-
-
- 
 
   // Handler function for Autocomplete value change
   const handleAutocompleteChange = (event, value) => {
     console.log(value, "valueeeeeeeee");
     setSelectedSiteName(value);
-    setpg(0)
-   
+    setpg(0);
   };
 
   // console.log(selectedSite, "selected site");
-  console.log(selectedSiteName,"selectedSiteName")
+  console.log(selectedSiteName, "selectedSiteName");
 
   return (
     <>
-      <Sidebar/>
-      <Navbar /> 
+      <Sidebar />
+      <Navbar />
 
       <Box
         sx={{
           display: "flex",
           flexGrow: 1,
-         
+
           maxHeight: "100%",
           // width:"86%",
           flexDirection: "row-reverse",
           backgroundColor: "",
+
+          
         }}
       >
-        <Grid container sx={{ backgroundColor: "", width: "95%", mt:'3em' }}>
-        <Grid item xs={12} md={12} lg={12}></Grid>
+        <Grid container sx={{ backgroundColor: "", width: "95%", mt: "3em" }}>
+          <Grid item xs={12} md={12} lg={12}></Grid>
           <Grid
             item
             sx={{
@@ -237,7 +280,23 @@ setAutocompleteOptions(autocompleteOptionsToSet);
             lg={12}
           >
             {/* <Box> */}
-            <h2> User Management</h2>
+
+
+            
+
+            <Box sx={{backgroundColor:"",paddingTop:5}}>
+              <Typography> User Management</Typography>
+
+              {/* <p>hgfghjbb</p> */}
+              
+                <Breadcrumbs
+                  separator={<NavigateNextIcon fontSize="small" />}
+                  aria-label="breadcrumb"
+                >
+                  {breadcrumbs}
+                </Breadcrumbs>
+              
+            </Box>
 
             {/* </Box> */}
 
@@ -480,8 +539,7 @@ setAutocompleteOptions(autocompleteOptionsToSet);
                       )}
                     /> */}
 
-
-{/* <Autocomplete
+                    {/* <Autocomplete
       disablePortal
       id="combo-box-demo"
  
@@ -502,39 +560,44 @@ setAutocompleteOptions(autocompleteOptionsToSet);
     />
    */}
 
-
-<Autocomplete
-  disablePortal
-  id="combo-box-demo"
-  value={selectedSiteName}
-  onChange={handleAutocompleteChange}
-  options={autocompleteOptions}
-  getOptionLabel={(option) => option.label}
-  // getOptionSelected={(option, value) => option.id === value.id}
-  // isOptionEqualToValue={(option, value) => option.id === value.id}
-  sx={{ width: 300 }}
-  renderInput={(params) => <TextField {...params} label="Select Site" />}
-/>
-
-
-
-
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      value={selectedSiteName}
+                      onChange={handleAutocompleteChange}
+                      options={autocompleteOptions}
+                      getOptionLabel={(option) => option.label}
+                      // getOptionSelected={(option, value) => option.id === value.id}
+                      // isOptionEqualToValue={(option, value) => option.id === value.id}
+                      sx={{ width: 300 }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Select Site" />
+                      )}
+                    />
                   </Box>
                   {/* </div> */}
                 </Box>
               </Grid>
               <Grid item xs={12} md={12} lg={12}>
-                <Paper sx={{backgroundColor:"pink",maxWidth:"93vw"}}>
-                  <TableContainer component={Paper} sx={{backgroundColor:"",maxWidth:"93vw",
-                  maxHeight:"50vh"
-                
-                }}>
-                    <Table  sx={{backgroundColor:""}}aria-label="simple table">
-                      <TableHead 
-                      sx={{ position: "sticky !important",
-                      top: 0,
-                      backgroundColor:"white"
-                      }}
+                <Paper sx={{ backgroundColor: "pink", maxWidth: "93vw" }}>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      backgroundColor: "",
+                      maxWidth: "93vw",
+                      maxHeight: "50vh",
+                    }}
+                  >
+                    <Table
+                      sx={{ backgroundColor: "" }}
+                      aria-label="simple table"
+                    >
+                      <TableHead
+                        sx={{
+                          position: "sticky !important",
+                          top: 0,
+                          backgroundColor: "white",
+                        }}
                       >
                         <TableRow>
                           <TableCell>Sl. No</TableCell>
@@ -577,14 +640,16 @@ setAutocompleteOptions(autocompleteOptionsToSet);
                                 {d.phoneNumber} | {d.email}
                               </TableCell>
                               {d.site ? (
-  <TableCell align="left">
-    {d.site.map((siteData) => (
-      <span key={siteData.id}>{siteData.name}</span>
-    ))}
-  </TableCell>
-) : (
-  <TableCell align="left">NA</TableCell>
-)}
+                                <TableCell align="left">
+                                  {d.site.map((siteData) => (
+                                    <span key={siteData.id}>
+                                      {siteData.name}
+                                    </span>
+                                  ))}
+                                </TableCell>
+                              ) : (
+                                <TableCell align="left">NA</TableCell>
+                              )}
                               {/* <TableCell align="right">{d.networking} 
                                 </TableCell>  */}
                             </TableRow>
@@ -592,19 +657,17 @@ setAutocompleteOptions(autocompleteOptionsToSet);
                       </TableBody>
                     </Table>
                   </TableContainer>
-                
                 </Paper>
                 <TablePagination
-
-                sx={{backgroundColor:"white"}}
-                    rowsPerPageOptions={[5, 10, 25, 100]}
-                    component="div"
-                    count={dataHarshita.data.length}
-                    rowsPerPage={rpg}
-                    page={pg}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
+                  sx={{ backgroundColor: "white" }}
+                  rowsPerPageOptions={[5, 10, 25, 100]}
+                  component="div"
+                  count={dataHarshita.data.length}
+                  rowsPerPage={rpg}
+                  page={pg}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
               </Grid>
             </Grid>
           </Grid>
